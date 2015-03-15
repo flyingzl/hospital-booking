@@ -1,0 +1,25 @@
+<ion-view view-title="医生出诊安排">
+    <ion-content>
+        <ion-refresher  pulling-text="下拉刷新数据"  on-refresh="reloadSchedules(true)">
+        </ion-refresher>
+        <div class="list card">
+            <div class="item item-divider">
+                {{deptName}} --- {{doctorName}}
+            </div>
+
+            <div class="item" ng-if="errorMessage">
+                {{errorMessage}}
+            </div>
+
+            <div class="item" ng-if="infoMessage">
+                {{infoMessage}}
+            </div>
+
+            <div class="item" ng-repeat="schedule in schedules" ng-click="book(schedule)">
+                {{schedule.date|weekFormat}} {{schedule.time}}<span ng-class="{'red': schedule.remaining > 0}">({{schedule.remaining}})</span>
+            </div>
+
+        </div>
+
+    </ion-content>
+</ion-view>

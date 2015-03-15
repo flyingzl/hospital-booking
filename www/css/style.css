@@ -1,0 +1,19 @@
+/* Empty. Add your own CSS if you like */
+
+.red{
+	color: red;
+}
+
+.spinner > svg{
+	-webkit-transform: translateY(6px);
+}
+
+.spinner + span{
+
+	margin-left: 5px;
+}
+
+.input-label > img{
+	-webkit-transform: translate3d(10px, 3px,0);
+	transform: translate3d(10px, 3px,0);
+}

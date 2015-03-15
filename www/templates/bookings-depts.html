@@ -1,0 +1,10 @@
+<ion-view view-title="门诊部">
+    <ion-content>
+        <ion-list>
+            <ion-item  href='#/hospitals/{{hostNo}}/{{dept.deptno}}?deptName={{dept.deptName}}' class="item-icon-right" ng-repeat="dept in depts">
+            	{{dept.deptName}}
+            	<i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

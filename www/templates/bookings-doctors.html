@@ -1,0 +1,10 @@
+<ion-view view-title="医生">
+    <ion-content>
+        <ion-list>
+            <ion-item  href='#/hospitals/{{hostNo}}/{{deptNo}}/{{doctor.doctorName}}/schedules?deptName={{deptName}}' class="item-icon-right" ng-repeat="doctor in doctors">
+            	{{doctor.doctorName}}
+            	<i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

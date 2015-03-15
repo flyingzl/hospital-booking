@@ -1,0 +1,17 @@
+<ion-view view-title="我的预约">
+    <ion-nav-buttons side="right">
+        <button class="button button-icon ion-refresh" ng-click="reloadHistory()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-refresher pulling-text="下拉刷新数据" on-refresh="reloadHistory(true)">
+        </ion-refresher>
+        <ion-list>
+            <ion-item ng-repeat="history in histories" type="item-text-wrap">
+                <h2>{{history.date}}</h2>
+                <p>{{history.dept}} -- {{history.doctorName}}</p>
+                <p>{{history.status}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

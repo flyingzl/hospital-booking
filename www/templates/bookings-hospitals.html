@@ -1,0 +1,10 @@
+<ion-view view-title="预约查询">
+    <ion-content>
+        <ion-list>
+            <ion-item href="#/hospitals/{{hospital.hostNo}}"  ng-repeat="hospital in hospitals" class="item-icon-right">
+                {{hospital.hostName}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
