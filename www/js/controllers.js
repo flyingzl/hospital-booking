@@ -1,6 +1,6 @@
-angular.module('bookings.controllers', [])
+angular.module ('bookings.controllers', [])
 
-.controller('HospitalCtrl', function($scope) {
+.controller ('HospitalCtrl', function ($scope) {
     $scope.hospitals = [{
         "hostName": "\u56db\u5ddd\u7701\u4eba\u6c11\u533b\u9662",
         "hostNo": "001"
@@ -41,36 +41,35 @@ angular.module('bookings.controllers', [])
 })
 
 
-.controller("DeptsCtrl", function($scope, $stateParams, BookingsService, LoadingService) {
-    LoadingService.show('正在加载医院门诊……');
-    BookingsService.getDepts($stateParams.hostNo).then(function(items) {
-        LoadingService.hide();
+.controller ("DeptsCtrl", function ($scope, $stateParams, BookingsService, LoadingService) {
+    LoadingService.show ('正在加载医院门诊……');
+    BookingsService.getDepts ($stateParams.hostNo).then (function (items) {
+        LoadingService.hide ();
         $scope.depts = items;
         $scope.hostNo = $stateParams.hostNo;
     });
 })
 
-.controller('DoctorsCtrl', function($scope, $stateParams, BookingsService, LoadingService) {
+.controller ('DoctorsCtrl', function ($scope, $stateParams, BookingsService, LoadingService) {
     $scope.hostNo = $stateParams.hostNo;
     $scope.deptNo = $stateParams.deptNo;
     $scope.deptName = $stateParams.deptName;
-    LoadingService.show('正在加载医生列表……');
+    LoadingService.show ('正在加载医生列表……');
 
-    BookingsService.getDoctors($scope.hostNo, $scope.deptNo, $scope.deptName)
-        .then(function(items) {
-            LoadingService.hide();
-            $scope.doctors = items;
-        });
+    BookingsService.getDoctors ($scope.hostNo, $scope.deptNo, $scope.deptName)
+        .then (function (items) {
+        LoadingService.hide ();
+        $scope.doctors = items;
+    });
 })
 
-.controller("ScheduleCtrl", function($scope, $stateParams, $ionicModal, $ionicPopup, BookingsService, LoadingService) {
-
+.controller ("ScheduleCtrl", function ($scope, $stateParams, $ionicModal, $ionicPopup, BookingsService, LoadingService) {
     var hostNo = $stateParams.hostNo,
         doctorName = $scope.doctorName = $stateParams.doctorName,
         deptName = $scope.deptName = $stateParams.deptName,
-        parseHTML = function(html) {
+        parseHTML = function (html) {
             var re = /<(.*)>/;
-            if (!re.test(html)) {
+            if (!re.test (html)) {
                 $scope.errorMessage = "账号异常,请尝试用3G/4G网络访问！";
                 return [];
             }
@@ -84,22 +83,22 @@ angular.module('bookings.controllers', [])
                 },
                 result = [];
 
-            var $elements = angular.element(html).find("p");
+            var $elements = angular.element (html).find ("p");
             for (var index = 0, l = $elements.length; index < l; index++) {
-                var $element = $elements.eq(index),
-                    text = $element.text(),
-                    matches = text.match(splitRegexp),
+                var $element = $elements.eq (index),
+                    text = $element.text (),
+                    matches = text.match (splitRegexp),
                     item = {};
                 item['dutyDate'] = matches[1];
-                item["remaining"] = parseInt(matches[2], 10);
+                item["remaining"] = parseInt (matches[2], 10);
                 if (item["remaining"] == 0) continue;
-                item['workId'] = $element.find("a").attr("id").split("_")[2];
-                item["time"] = $element.parent().parent().children().eq(0).text();
+                item['workId'] = $element.find ("a").attr ("id").split ("_")[2];
+                item["time"] = $element.parent ().parent ().children ().eq (0).text ();
                 item["dutyTime"] = dutyTimesMap[item["time"]];
-                result.push(item);
+                result.push (item);
             }
 
-            result = result.sort(function(a, b) {
+            result = result.sort (function (a, b) {
                 return b['remaining'] - a['remaining'];
             });
             return result;
@@ -109,44 +108,44 @@ angular.module('bookings.controllers', [])
     $scope.booking = {
         HosNo: hostNo,
         doctorName: doctorName,
-        deptName: deptName.replace(/--.*/, '')
+        deptName: deptName.replace (/--.*/, '')
     };
 
-    $scope.reloadSchedules = function(refresh) {
-        !refresh && LoadingService.show("正在加载医生出诊时间……")
-        BookingsService.getSchedulesForDoctor(hostNo, deptName, doctorName)
-            .then(function(html) {
-                !refresh && LoadingService.hide();
-                $scope.schedules = parseHTML(html);
-                if (!$scope.errorMessage && $scope.schedules.length == 0) {
-                    $scope.infoMessage = "来迟了，已经全被预约了！";
-                }
-                refresh && $scope.$broadcast('scroll.refreshComplete');
-            });
-    }
+    $scope.reloadSchedules = function (refresh) {
+        !refresh && LoadingService.show ("正在加载医生出诊时间……")
+        BookingsService.getSchedulesForDoctor (hostNo, deptName, doctorName)
+            .then (function (html) {
+            !refresh && LoadingService.hide ();
+            $scope.schedules = parseHTML (html);
+            if (!$scope.errorMessage && $scope.schedules.length == 0) {
+                $scope.infoMessage = "来迟了，已经全被预约了！";
+            }
+            refresh && $scope.$broadcast ('scroll.refreshComplete');
+        });
+    };
 
     // 后台加载modal所需页面
-    $ionicModal.fromTemplateUrl('templates/bookings-booking.html', {
+    $ionicModal.fromTemplateUrl ('templates/bookings-booking.html', {
         scope: $scope,
         animation: 'slide-in-up'
-    }).then(function(modal) {
+    }).then (function (modal) {
         $scope.modal = modal;
     });
 
-    $scope.showModal = function(schedue) {
-        angular.extend($scope.booking, {
+    $scope.showModal = function (schedue) {
+        angular.extend ($scope.booking, {
             workId: schedue.workId,
             dutyDate: schedue.dutyDate,
             dutyTime: schedue.dutyTime
         });
-        $scope.modal.show();
-    }
+        $scope.modal.show ();
+    };
 
-    $scope.createBooking = function(booking) {
+    $scope.createBooking = function (booking) {
         var cardNo = '0002492117';
-        LoadingService.show("正在预约医生……");
-        BookingsService.validateCardNo(hostNo, cardNo).then(function(item) {
-            var bookingParams = angular.extend(booking, {
+        LoadingService.show ("正在预约医生……");
+        BookingsService.validateCardNo (hostNo, cardNo).then (function (item) {
+            var bookingParams = angular.extend (booking, {
                 name: item.UserName,
                 sex: item.UserSex,
                 tel: item.UserTel,
@@ -161,8 +160,8 @@ angular.module('bookings.controllers', [])
             });
 
             //预定医生
-            BookingsService.bookDoctor(bookingParams).then(function(item) {
-                LoadingService.hide();
+            BookingsService.bookDoctor (bookingParams).then (function (item) {
+                LoadingService.hide ();
                 var options = {
                         title: "信息提示",
                         cssClass: 'bookingResult',
@@ -181,44 +180,44 @@ angular.module('bookings.controllers', [])
                     msg = '恭喜您，预约' + item.DoctorName + '成功，您的预约时间是' + item.DutyDate + dutyTimeMap[item.DutyTime], +", 你排在第" + item.SerialNum + "号";
                 }
                 options['template'] = msg;
-                $ionicPopup.alert(options);
+                $ionicPopup.alert (options);
             });
 
         });
-    }
+    };
 
-    $scope.hideModal = function() {
-        $scope.modal.hide();
-    }
+    $scope.hideModal = function () {
+        $scope.modal.hide ();
+    };
 
-    $scope.$on('$destroy', function() {
-        $scope.modal.remove();
+    $scope.$on ('$destroy', function () {
+        $scope.modal.remove ();
     });
 
-    $scope.reloadSchedules();
+    $scope.reloadSchedules ();
 
 })
 
-.controller('HistoryCtrl', function($scope, BookingsService, LoadingService, storage) {
+.controller ('HistoryCtrl', function ($scope, BookingsService, LoadingService, storage) {
 
-    var userInfo = storage.get('userInfo') || {
-            cardNo: '0002492136',
-            userName: '姜姝婷'
-        },
-        parseHTML = function(html) {
-            var $element = angular.element(html),
-                $elements = $element.find("tr"),
+    var userInfo = storage.get ('userInfo') || {
+                cardNo: '0002492136',
+                userName: '姜姝婷'
+            },
+        parseHTML = function (html) {
+            var $element = angular.element (html),
+                $elements = $element.find ("tr"),
                 result = [];
 
-            angular.forEach($elements, function($tr, index) {
+            angular.forEach ($elements, function ($tr, index) {
                 if (index == 0) return;
-                var $children = angular.element($tr).find("td"),
+                var $children = angular.element ($tr).find ("td"),
                     item = {};
-                item["dept"] = $children.eq(1).text();
-                item["doctorName"] = $children.eq(2).text();
-                item["date"] = $children.eq(4).text();
-                item["status"] = $children.eq(5).text();
-                result.push(item);
+                item["dept"] = $children.eq (1).text ();
+                item["doctorName"] = $children.eq (2).text ();
+                item["date"] = $children.eq (4).text ();
+                item["status"] = $children.eq (5).text ();
+                result.push (item);
             });
 
             return result;
@@ -229,16 +228,16 @@ angular.module('bookings.controllers', [])
         return;
     }
 
-    $scope.reloadHistory = function(refresh) {
-        !refresh && LoadingService.show('正在加载预约历史……');
-        refresh && $scope.$broadcast('scroll.refreshComplete');
-        BookingsService.getRegHistory(userInfo["cardNo"], userInfo["userName"])
-            .then(function(html) {
-                !refresh && LoadingService.hide();
-                $scope.histories = parseHTML(html);
-            })
-    }
+    $scope.reloadHistory = function (refresh) {
+        !refresh && LoadingService.show ('正在加载预约历史……');
+        refresh && $scope.$broadcast ('scroll.refreshComplete');
+        BookingsService.getRegHistory (userInfo["cardNo"], userInfo["userName"])
+            .then (function (html) {
+            !refresh && LoadingService.hide ();
+            $scope.histories = parseHTML (html);
+        })
+    };
 
-    $scope.reloadHistory();
+    $scope.reloadHistory ();
 
 });
