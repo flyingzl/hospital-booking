@@ -1,6 +1,6 @@
 angular.module('bookings', ['ionic', 'bookings.controllers', 'bookings.services', 'bookings.filters', 'bookings.directive'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $http) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -13,6 +13,10 @@ angular.module('bookings', ['ionic', 'bookings.controllers', 'bookings.services'
         }
     });
 })
+
+.config(['$httpProvider', function($httpProvider) {
+   $httpProvider.defaults.withCredentials = true;
+}])
 
 .constant('bookingsConfig', {
     BASE_URL: 'http://www.114gh.cn/',
@@ -27,6 +31,8 @@ angular.module('bookings', ['ionic', 'bookings.controllers', 'bookings.services'
     USER_REG_LIST: 'GetRegList.ashx',
     //校验码
     VCODE: 'GetRegCode.aspx',
+    //检测用户账号信息
+    VALID_CARD: 'Valid_SC.ashx',
     // 预约医生
     REG_URL: 'Reg_SC.ashx'
 })

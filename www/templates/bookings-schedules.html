@@ -15,8 +15,8 @@
                 {{infoMessage}}
             </div>
 
-            <div class="item" ng-repeat="schedule in schedules" ng-click="book(schedule)">
-                {{schedule.date|weekFormat}} {{schedule.time}}<span ng-class="{'red': schedule.remaining > 0}">({{schedule.remaining}})</span>
+            <div class="item" ng-repeat="schedule in schedules" ng-click="showModal(schedule)">
+                {{schedule.dutyDate|weekFormat}} {{schedule.time}}<span ng-class="{'red': schedule.remaining > 0}">({{schedule.remaining}})</span>
             </div>
 
         </div>

@@ -6,18 +6,14 @@
     <ion-content class="padding">
         <div class="list">
             <label class="item item-input">
-                <span class="input-label">用户名</span>
-                <input ng-model="newUser.firstName"  placeholder="您的姓名" type="text">
-            </label>
-            <label class="item item-input">
                 <span class="input-label">手机号</span>
-                <input ng-model="newUser.lastName" placeholder="您的手机号" type="text">
+                <input ng-model="booking.SendPhone" placeholder="您的手机号" type="text">
             </label>
             <div class="item item-input">
                 <span class="input-label">验证码<vcode></vcode></span>
-                <input ng-model="newUser.email"  placeholder="左侧图像上的数字"  type="text">
+                <input ng-model="booking.codevalue"  placeholder="左侧图像上的数字"  type="text">
             </div>
-            <button class="button button-full button-positive" ng-click="createContact(newUser)">确认预约</button>
+            <button class="button button-full button-positive" ng-click="createBooking(booking)">确认预约</button>
         </div>
     </ion-content>
 </ion-modal-view>

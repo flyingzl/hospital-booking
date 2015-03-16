@@ -63,7 +63,7 @@ angular.module('bookings.controllers', [])
         });
 })
 
-.controller("ScheduleCtrl", function($scope, $stateParams, $ionicModal, BookingsService, LoadingService) {
+.controller("ScheduleCtrl", function($scope, $stateParams, $ionicModal, $ionicPopup, BookingsService, LoadingService) {
 
     var hostNo = $stateParams.hostNo,
         doctorName = $scope.doctorName = $stateParams.doctorName,
@@ -76,18 +76,26 @@ angular.module('bookings.controllers', [])
             }
 
             var splitRegexp = /(.*)\((\d+)\)/,
+                dutyTimesMap = {
+                    "上午": 1,
+                    "中午": 2,
+                    "下午": 3,
+                    "晚上": 4
+                },
                 result = [];
+
             var $elements = angular.element(html).find("p");
             for (var index = 0, l = $elements.length; index < l; index++) {
                 var $element = $elements.eq(index),
                     text = $element.text(),
                     matches = text.match(splitRegexp),
                     item = {};
-                item['date'] = matches[1];
+                item['dutyDate'] = matches[1];
                 item["remaining"] = parseInt(matches[2], 10);
                 if (item["remaining"] == 0) continue;
                 item['workId'] = $element.find("a").attr("id").split("_")[2];
                 item["time"] = $element.parent().parent().children().eq(0).text();
+                item["dutyTime"] = dutyTimesMap[item["time"]];
                 result.push(item);
             }
 
@@ -97,21 +105,86 @@ angular.module('bookings.controllers', [])
             return result;
         };
 
+    // 用户预约数据
+    $scope.booking = {
+        HosNo: hostNo,
+        doctorName: doctorName,
+        deptName: deptName.replace(/--.*/, '')
+    };
+
     $scope.reloadSchedules = function(refresh) {
         !refresh && LoadingService.show("正在加载医生出诊时间……")
         BookingsService.getSchedulesForDoctor(hostNo, deptName, doctorName)
             .then(function(html) {
                 !refresh && LoadingService.hide();
                 $scope.schedules = parseHTML(html);
-                if( !$scope.errorMessage && $scope.schedules.length == 0 ){
+                if (!$scope.errorMessage && $scope.schedules.length == 0) {
                     $scope.infoMessage = "来迟了，已经全被预约了！";
                 }
                 refresh && $scope.$broadcast('scroll.refreshComplete');
             });
     }
 
-    $scope.book = function(schedule) {
+    // 后台加载modal所需页面
+    $ionicModal.fromTemplateUrl('templates/bookings-booking.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+
+    $scope.showModal = function(schedue) {
+        angular.extend($scope.booking, {
+            workId: schedue.workId,
+            dutyDate: schedue.dutyDate,
+            dutyTime: schedue.dutyTime
+        });
         $scope.modal.show();
+    }
+
+    $scope.createBooking = function(booking) {
+        var cardNo = '0002492117';
+        LoadingService.show("正在预约医生……");
+        BookingsService.validateCardNo(hostNo, cardNo).then(function(item) {
+            var bookingParams = angular.extend(booking, {
+                name: item.UserName,
+                sex: item.UserSex,
+                tel: item.UserTel,
+                address: item.UserAddress,
+                IdCard: item.UserIdCard,
+                age: item.UserAge,
+                useridkey: item.useridkey,
+                HospitalCard: item.UserCode,
+                excode: item.code,
+                rbTime: 0,
+                cardNo: 0
+            });
+
+            //预定医生
+            BookingsService.bookDoctor(bookingParams).then(function(item) {
+                LoadingService.hide();
+                var options = {
+                        title: "信息提示",
+                        cssClass: 'bookingResult',
+                        okText: '确定'
+                    },
+                    dutyTimeMap = {
+                        "1": "上午",
+                        "2": "中午",
+                        "3": "下午",
+                        "4": "晚上"
+                    },
+                    msg = '';
+                if (item.success == -1 || item.success == 0) {
+                    msg = item._errorMsg;
+                } else {
+                    msg = '恭喜您，预约' + item.DoctorName + '成功，您的预约时间是' + item.DutyDate + dutyTimeMap[item.DutyTime], +", 你排在第" + item.SerialNum + "号";
+                }
+                options['template'] = msg;
+                $ionicPopup.alert(options);
+            });
+
+        });
     }
 
     $scope.hideModal = function() {
@@ -123,14 +196,6 @@ angular.module('bookings.controllers', [])
     });
 
     $scope.reloadSchedules();
-
-    $ionicModal.fromTemplateUrl('templates/bookings-booking.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(function(modal) {
-        $scope.modal = modal;
-    });
-
 
 })
 

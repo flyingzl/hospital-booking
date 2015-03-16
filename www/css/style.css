@@ -17,3 +17,8 @@
 	-webkit-transform: translate3d(10px, 3px,0);
 	transform: translate3d(10px, 3px,0);
 }
+
+.bookingResult .popup-body{
+
+	overflow: initial;
+}

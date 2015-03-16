@@ -18,7 +18,7 @@ angular.module('bookings.services', [])
 
 }])
 
-.factory('BookingsService', ['$http', '$q', 'LoadingService', 'bookingsConfig', 
+.factory('BookingsService', ['$http', '$q', 'LoadingService', 'bookingsConfig',
     function($http, $q, loading, config) {
 
         var sendRequest = function(action, params) {
@@ -77,6 +77,22 @@ angular.module('bookings.services', [])
                 };
 
                 return sendRequest(config.USER_REG_LIST, params);
+            },
+
+            // 校验一卡通卡号是否正确合法
+            validateCardNo: function(hostNo, cardNo) {
+                var params = {
+                    hosNo: hostNo,
+                    hosCard: cardNo
+                };
+                
+                return sendRequest(config.VALID_CARD, params);
+            },
+
+            // 预约医生
+            bookDoctor: function( params ){
+
+                return sendRequest(config.REG_URL, params);
             }
         }
     }
