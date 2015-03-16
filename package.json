@@ -1,5 +1,5 @@
 {
-  "name": "bookings",
+  "name": "预约挂号",
   "version": "1.0.0",
   "description": "bookings: An Ionic project",
   "dependencies": {
