@@ -181,7 +181,7 @@ angular.module ('bookings.controllers', [])
                 }
                 options['template'] = msg;
                 $ionicPopup.alert (options).then(function(res){
-                    item.DoctorName && $state.go("bookings.history");
+                    item.DoctorName && $state.go('bookings.history');
                 });
             });
 
