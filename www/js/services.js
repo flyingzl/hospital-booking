@@ -27,7 +27,8 @@ angular.module('bookings.services', [])
             params['d'] = +new Date();
 
             $http.get(url, {
-                params: params
+                params: params,
+                timeout: 10* 1000
             }).success(function(items) {
                 defer.resolve(items);
             }).error(function() {

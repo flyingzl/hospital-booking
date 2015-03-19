@@ -63,7 +63,7 @@ angular.module ('bookings.controllers', [])
     });
 })
 
-.controller ("ScheduleCtrl", function ($scope, $stateParams, $ionicModal, $ionicPopup, BookingsService, LoadingService) {
+.controller ("ScheduleCtrl", function ($scope, $stateParams, $ionicModal, $ionicPopup, $state, BookingsService, LoadingService) {
     var hostNo = $stateParams.hostNo,
         doctorName = $scope.doctorName = $stateParams.doctorName,
         deptName = $scope.deptName = $stateParams.deptName,
@@ -180,7 +180,9 @@ angular.module ('bookings.controllers', [])
                     msg = '恭喜您，预约' + item.DoctorName + '成功，您的预约时间是' + item.DutyDate + dutyTimeMap[item.DutyTime], +", 你排在第" + item.SerialNum + "号";
                 }
                 options['template'] = msg;
-                $ionicPopup.alert (options);
+                $ionicPopup.alert (options).then(function(){
+                    item.success ==1 && $state.go("bookings.history");
+                });
             });
 
         });
@@ -201,8 +203,8 @@ angular.module ('bookings.controllers', [])
 .controller ('HistoryCtrl', function ($scope, BookingsService, LoadingService, storage) {
 
     var userInfo = storage.get ('userInfo') || {
-                cardNo: '0002492136',
-                userName: '姜姝婷'
+                cardNo: '0002492117',
+                userName: '胡渝珠'
             },
         parseHTML = function (html) {
             var $element = angular.element (html),

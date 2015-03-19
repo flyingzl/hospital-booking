@@ -1,5 +1,6 @@
 angular.module('bookings', ['ionic', 'bookings.controllers', 'bookings.services', 'bookings.filters', 'bookings.directive'])
 
+
 .run(function($ionicPlatform, $http) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
