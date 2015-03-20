@@ -148,7 +148,7 @@ angular.module('bookings.controllers', [])
 })
 
 .controller("ScheduleCtrl", function($scope, $stateParams, $ionicNavBarDelegate,
-    $ionicModal, $ionicPopup, $state, BookingsService, LoadingService, storage) {
+    $ionicModal, $ionicPopup, $state, $timeout, BookingsService, LoadingService, storage) {
     $ionicNavBarDelegate.showBackButton(true);
     var hostNo = $stateParams.hostNo,
         doctorName = $scope.doctorName = $stateParams.doctorName,
@@ -251,7 +251,9 @@ angular.module('bookings.controllers', [])
             }
             options['template'] = msg;
             $ionicPopup.alert(options).then(function(res) {
-                item.DoctorName && $state.go('bookings.history');
+                item.DoctorName && $timeout(function(){
+                    $state.go('bookings.history');
+                }, 100);
             });
         });
     };
