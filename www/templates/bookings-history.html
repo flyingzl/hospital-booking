@@ -10,7 +10,7 @@
             <ion-item ng-click="withDrawRegistration(history)" ng-repeat="history in histories" type="item-text-wrap">
                 <h2>{{history.date}}</h2>
                 <p>{{history.dept}} -- {{history.doctorName}}</p>
-                <p ng-class="{'balanced': history.canWithdraw}">{{history.status}}</p>
+                <p><span ng-class="{'balanced':history.canWithdraw}">{{history.status}}</span></p>
             </ion-item>
         </ion-list>
         <div class="card" ng-if="histories.length == 0 ">
