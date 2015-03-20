@@ -7,7 +7,8 @@ angular.module('bookings.services', [])
         show: function(text) {
             text = text || '正在加载数据...'
             $loading.show({
-                template: '<ion-spinner icon="android" class="spinner"></ion-spinner>' + '<span>' + text + '</span>'
+                template: '<ion-spinner icon="android" class="spinner"></ion-spinner>' + '<span>' + text + '</span>',
+                hideOnStateChange : true
             });
         },
 
@@ -116,6 +117,10 @@ angular.module('bookings.services', [])
         set: function(key, value) {
             angular.isObject(value) && (value = JSON.stringify(value));
             storage.setItem(key, value);
+        },
+
+        remove: function( key ){
+            storage.removeItem(key);
         }
     }
 

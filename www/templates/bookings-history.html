@@ -13,5 +13,10 @@
                 <p>{{history.status}}</p>
             </ion-item>
         </ion-list>
+        <div class="card" ng-if="histories.length == 0 ">
+            <div class="item item-text-wrap">
+                您没有任何预约记录。
+            </div>
+        </div>
     </ion-content>
 </ion-view>

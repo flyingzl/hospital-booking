@@ -5,15 +5,19 @@ navigation history that also transitions its views in and out.
 -->
 <ion-tabs class="tabs-icon-top tabs-positive">
 
-  <!-- Dashboard Tab -->
-  <ion-tab title="预约查询" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/bookings/hospitals">
-    <ion-nav-view name="bookings-hospitals"></ion-nav-view>
-  </ion-tab>
 
-  <!-- Bookings Tab -->
-  <ion-tab title="我的预约" icon="ion-ios-list-outline" href="#/bookings/history">
-    <ion-nav-view name="bookings-history"></ion-nav-view>
-  </ion-tab>
+    <ion-tab title="预约查询" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/bookings/hospitals">
+        <ion-nav-view name="bookings-hospitals"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="我的预约" icon="ion-ios-list-outline" href="#/bookings/history">
+        <ion-nav-view name="bookings-history"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="个人信息" icon="ion-ios-person" href="#/bookings/profile">
+        <ion-nav-view name="bookings-profile"></ion-nav-view>
+    </ion-tab>
+
 
 
 </ion-tabs>

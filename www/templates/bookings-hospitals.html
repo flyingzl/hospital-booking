@@ -1,10 +1,14 @@
-<ion-view view-title="预约查询">
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">选择医院</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">取消</button>
+    </ion-header-bar>
     <ion-content>
         <ion-list>
-            <ion-item href="#/hospitals/{{hospital.hostNo}}"  ng-repeat="hospital in hospitals" class="item-icon-right">
+            <ion-item href='' ng-click='selectHospital(hospital)' ng-repeat="hospital in hospitals" class="item-icon-right">
                 {{hospital.hostName}}
-                <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
         </ion-list>
+        
     </ion-content>
-</ion-view>
+</ion-modal-view>

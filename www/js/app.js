@@ -42,8 +42,8 @@ angular.module('bookings', ['ionic', 'bookings.controllers', 'bookings.services'
 
     $stateProvider
 
-    // setup an abstract state for the tabs directive
-        .state('bookings', {
+
+    .state('bookings', {
         url: "/bookings",
         abstract: true,
         templateUrl: "templates/tabs.html"
@@ -51,12 +51,12 @@ angular.module('bookings', ['ionic', 'bookings.controllers', 'bookings.services'
 
     // Each tab has its own nav history stack:
 
-    .state('bookings.hospitals', {
-        url: '^/hospitals',
+    .state('bookings.login', {
+        url: '^/login',
         views: {
             'bookings-hospitals': {
-                templateUrl: 'templates/bookings-hospitals.html',
-                controller: 'HospitalCtrl'
+                templateUrl: 'templates/bookings-login.html',
+                controller: 'LoginCtrl'
             }
         }
     })
@@ -104,9 +104,19 @@ angular.module('bookings', ['ionic', 'bookings.controllers', 'bookings.services'
                 controller: 'HistoryCtrl'
             }
         }
+    })
+
+    .state('bookings.profile', {
+        url: '/profile',
+        views: {
+            'bookings-profile': {
+                templateUrl: 'templates/bookings-profile.html',
+                controller: 'ProfileCtrl'
+            }
+        }
     });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/hospitals');
+    $urlRouterProvider.otherwise('/login');
 
 });
