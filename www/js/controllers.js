@@ -268,7 +268,7 @@ angular.module('bookings.controllers', [])
 
 })
 
-.controller('HistoryCtrl', function($scope, $state, BookingsService, LoadingService, storage) {
+.controller('HistoryCtrl', function($scope, $state, $ionicPopup, BookingsService, LoadingService, storage) {
 
     var userInfo = storage.get('userInfo'),
         cardNo,
@@ -281,11 +281,20 @@ angular.module('bookings.controllers', [])
             angular.forEach($elements, function($tr, index) {
                 if (index == 0) return;
                 var $children = angular.element($tr).find("td"),
-                    item = {};
+                    item = {},
+                    $anchor;
                 item["dept"] = $children.eq(1).text();
                 item["doctorName"] = $children.eq(2).text();
                 item["date"] = $children.eq(4).text();
                 item["status"] = $children.eq(5).text();
+                $anchor = $children.eq(6).find("a");
+                // 处理退号
+                item["canWithdraw"] = $anchor.text() === '退号';
+                if (item["canWithdraw"]) {
+                    var tempArray = $anchor.attr("onclick").match(/(\d+)/g);
+                    item["workflowId"] = tempArray[0];
+                    item["hostNo"] = tempArray[1];
+                }
                 result.push(item);
             });
 
@@ -324,7 +333,22 @@ angular.module('bookings.controllers', [])
             })
     };
 
-
+    // 取消预约
+    $scope.withDrawRegistration = function(item) {
+        if (!item.canWithdraw) return;
+        $ionicPopup.confirm({
+            title: "信息提示",
+            cssClass: 'bookingResult',
+            okText: '确定',
+            okType:'button-assertive',
+            cancelText: '取消',
+            template: '确定取消预约么?'
+        }).then(function( res ) {
+            res && BookingsService.withDrawRegistration(item.hostNo, item.workflowId).then(function(){
+                $scope.reloadHistory();
+            });
+        });
+    }
 
 })
 
@@ -352,7 +376,7 @@ angular.module('bookings.controllers', [])
     $scope.logout = function() {
         storage.remove(key);
         $state.go("bookings.login");
-        $window.setTimeout(function(){
+        $window.setTimeout(function() {
             $window.location.reload();
         }, 200);
 

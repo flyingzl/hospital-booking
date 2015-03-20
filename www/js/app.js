@@ -35,7 +35,9 @@ angular.module('bookings', ['ionic', 'bookings.controllers', 'bookings.services'
     //检测用户账号信息
     VALID_CARD: 'Valid_SC.ashx',
     // 预约医生
-    REG_URL: 'Reg_SC.ashx'
+    REG_URL: 'Reg_SC.ashx',
+    // 取消预约
+    WITHDRAW_URL: 'TuiHao_SC.ashx'
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

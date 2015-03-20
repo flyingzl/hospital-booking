@@ -95,6 +95,15 @@ angular.module('bookings.services', [])
             bookDoctor: function( params ){
 
                 return sendRequest(config.REG_URL, params);
+            },
+
+            //取消预约
+            withDrawRegistration: function(hostNo, workflowId){
+                var params = {
+                    hosno: hostNo,
+                    workfloadid: workflowId
+                };
+                return sendRequest(config.WITHDRAW_URL, params);
             }
         }
     }
