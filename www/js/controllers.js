@@ -251,9 +251,10 @@ angular.module('bookings.controllers', [])
             }
             options['template'] = msg;
             $ionicPopup.alert(options).then(function(res) {
-                item.DoctorName && $timeout(function(){
+                if( item.DoctorName ){
+                    $scope.hideModal();
                     $state.go('bookings.history');
-                }, 100);
+                }
             });
         });
     };
