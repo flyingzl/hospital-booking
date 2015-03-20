@@ -344,7 +344,9 @@ angular.module('bookings.controllers', [])
             cancelText: '取消',
             template: '确定取消预约么?'
         }).then(function( res ) {
+            LoadingService.show("正在取消预约...");
             res && BookingsService.withDrawRegistration(item.hostNo, item.workflowId).then(function(){
+                LoadingService.hide();
                 $scope.reloadHistory();
             });
         });
