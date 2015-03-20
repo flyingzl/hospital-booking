@@ -1,0 +1,24 @@
+<ion-view view-title="个人设置">
+    <ion-content class="padding">
+        <div class="list" ng-if="hasProfile">
+            <a class="item item-icon-left" href="#">
+                <i class="icon ion-person"></i> 用户名
+                <span class="item-note">{{userName}}</span>
+            </a>
+
+            <a class="item item-icon-left" href="#">
+                <i class="icon ion-heart"></i> 卡号
+                <span class="item-note">{{cardNo}}</span>
+            </a>
+
+            <a class="item item-icon-left" href="#">
+                <i class="icon ion-card"></i> 身份证
+                <span class="item-note">{{IdCard}}</span>
+            </a>
+
+            <a class="item" href="#">
+                <button class="button button-full  button-assertive" ng-click="logout()">退出</button>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

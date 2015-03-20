@@ -1,0 +1,20 @@
+<ion-view view-title="">
+    <ion-content class="padding">
+        <div class="list">
+            <label class="item item-input item-icon-right" ng-click="chooseHospital()" >
+                <span class="input-label">医院</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+                <span class="item-node">{{loging.hostName}}</span>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">姓名</span>
+                <input ng-model="loging.userName" placeholder="您的姓名" type="text">
+            </label>
+            <div class="item item-input">
+                <span class="input-label">卡号</span>
+                <input ng-model="loging.cardNo" placeholder="您的医院卡号" type="text">
+            </div>
+            <button class="button button-full button-positive" ng-click="login(loging)">登入</button>
+        </div>
+    </ion-content>
+</ion-view>
