@@ -40,6 +40,16 @@
 或者在浏览器上访问，运行`ionic serve`即可
 
 
+# 效果
+
+![登入页面](screenshoots/login.png)
+
+![选择医院](screenshoots/hospital.png)
+
+![选择医院后更新](screenshoots/login-hospital.png)
+
+
+
 
 
 
