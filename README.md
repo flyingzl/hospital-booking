@@ -3,7 +3,7 @@
 
 # 简介
 
-`hospital-booking`是[中国电信114挂号网](http://www.114gh.cn/)的mobile版本，由[ionic framework](http://ionicframework.com)强力驱动。
+`hospital-booking`是[中国电信114挂号网](http://www.114gh.cn/guahao/)的mobile版本，由[ionic framework](http://ionicframework.com)强力驱动。
 
 
 # 功能
