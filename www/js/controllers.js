@@ -226,6 +226,7 @@ angular.module('bookings.controllers', [])
             dutyTime: schedue.dutyTime
         });
         $scope.modal.show();
+        $scope.booking.codevalue = '';
     };
 
     $scope.createBooking = function(booking) {
@@ -263,7 +264,6 @@ angular.module('bookings.controllers', [])
 
     $scope.hideModal = function() {
         $scope.modal.hide();
-        $scope.booking.codevalue = '';
     };
 
     $scope.$on('$destroy', function() {
