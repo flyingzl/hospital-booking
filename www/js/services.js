@@ -29,7 +29,7 @@ angular.module('bookings.services', [])
 
             $http.get(url, {
                 params: params,
-                timeout: 10* 1000
+                timeout: 60* 1000
             }).success(function(items) {
                 defer.resolve(items);
             }).error(function() {

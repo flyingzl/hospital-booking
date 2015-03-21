@@ -35,7 +35,8 @@ angular.module('bookings.controllers', [])
     $scope.login = function(loging) {
         var userObject = {},
             hostNo = loging.hostNo,
-            cardNo = loging.cardNo;
+            cardNo = loging.cardNo,
+            hostName = loging.hostName;
         LoadingService.show("正在登入……");
         BookingsService.validateCardNo(hostNo, cardNo).then(function(item) {
             LoadingService.hide();
@@ -50,6 +51,7 @@ angular.module('bookings.controllers', [])
             }
             angular.extend(userObject, {
                 HosNo: hostNo,
+                hosName: hostName,
                 name: item.UserName,
                 sex: item.UserSex,
                 tel: item.UserTel,
@@ -261,6 +263,7 @@ angular.module('bookings.controllers', [])
 
     $scope.hideModal = function() {
         $scope.modal.hide();
+        $scope.booking.codevalue = '';
     };
 
     $scope.$on('$destroy', function() {
@@ -347,11 +350,13 @@ angular.module('bookings.controllers', [])
             cancelText: '取消',
             template: '确定取消预约么?'
         }).then(function( res ) {
-            LoadingService.show("正在取消预约...");
-            res && BookingsService.withDrawRegistration(item.hostNo, item.workflowId).then(function(){
-                LoadingService.hide();
-                $scope.reloadHistory();
-            });
+            if( res ){
+                LoadingService.show("正在取消预约...");
+                BookingsService.withDrawRegistration(item.hostNo, item.workflowId).then(function() {
+                    LoadingService.hide();
+                    $scope.reloadHistory();
+                });
+            }
         });
     }
 
@@ -366,12 +371,14 @@ angular.module('bookings.controllers', [])
         $scope.hasProfile = true;
         $scope.userName = userObject.name;
         $scope.cardNo = userObject.HospitalCard;
-        $scope.IdCard = userObject.IdCard
+        $scope.IdCard = userObject.IdCard;
+        $scope.hostName = userObject.hosName;
 
     }
 
     $scope.$on("storage.changed", function() {
         $scope.hasProfile = true;
+        $state.reload();
     });
 
     $scope.$on("$ionicView.beforeEnter", function() {
