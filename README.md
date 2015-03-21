@@ -42,9 +42,15 @@
 
 # 效果
 
+- 登入页面 
+
 ![登入页面](screenshoots/login.png)
 
+- 选择医院
+
 ![选择医院](screenshoots/hospital.png)
+
+- 选择医院后更新页面
 
 ![选择医院后更新](screenshoots/login-hospital.png)
 
